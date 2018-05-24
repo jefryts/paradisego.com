@@ -4,11 +4,17 @@ import App from './App.vue'
 import router from './router'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import locale from 'element-ui/lib/locale/lang/es'
+import '../sass/element-variables.scss'
+
+import store from './store'
+
+import './icons' // icon
 
 // import bar from './components/progress'
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, { locale });
+
 
 // router.beforeEach((to, from, next) => {
 // 	bar.start()
@@ -21,8 +27,10 @@ Vue.filter('formatMoney', (value) => {
 		.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 })
 
-const app = new Vue({
-	el: '#root',
-	render: h => h(App),
-	router
+new Vue({
+	el: '#app',
+	router,
+	store,
+	template: '<App/>',
+	components: { App }
 })

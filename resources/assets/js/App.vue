@@ -1,10 +1,11 @@
 <template>
-	<div class="container">
-		<div class="navbar">&nbsp;</div>
-		<div class="content">
-			<transition name="fade" mode="out-in">
-				<router-view></router-view>
-			</transition>
-		</div>
-	</div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
+
+<script>
+export default {
+  name: 'App'
+}
+</script>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p>HOLA</p>
+		<el-button>Default</el-button>
 	</div>
 </template>
 <script type="text/javascript">
