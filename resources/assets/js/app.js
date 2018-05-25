@@ -11,15 +11,17 @@ import store from './store'
 
 import './icons' // icon
 
-// import bar from './components/progress'
+import NProgress from 'nprogress' // Progress 进度条
+import 'nprogress/nprogress.css'// Progress 进度条样式
 
 Vue.use(ElementUI, { locale });
 
 
-// router.beforeEach((to, from, next) => {
-// 	bar.start()
-// 	next()
-// })
+router.beforeEach((to, from, next) => {
+	NProgress.configure({ showSpinner: false })
+	NProgress.start()
+	next()
+})
 
 Vue.filter('formatMoney', (value) => {
 	return Number(value)

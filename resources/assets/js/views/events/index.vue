@@ -1,9 +1,10 @@
 <template>
-	<div>
+	<div class="app-container">
+		<div>HOLA</div>
 		<el-button>Default</el-button>
 	</div>
 </template>
-<script type="text/javascript">
+<script>
 	import Vue from 'vue'
 	// import { get } from '../../lib/api'
 	export default {
