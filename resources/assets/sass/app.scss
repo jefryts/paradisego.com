@@ -96,6 +96,18 @@ a:hover {
 
 // Otros
 
+.text-center {
+	text-align: center
+}
+
+.text-right {
+    text-align: right
+}
+
+.text-left {
+    text-align: left
+}
+
 .app-wrapper {
     @include clearfix;
     position: relative;

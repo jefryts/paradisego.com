@@ -2,6 +2,9 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
+	<el-container class="bar-container">
+	<el-button>Iniciar Sesión</el-button>
+	</el-container>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80">
@@ -20,6 +23,11 @@
     </el-dropdown>
   </el-menu>
 </template>
+<style>
+  .bar-container {
+	float: right;
+  }
+</style>
 
 <script>
 import { mapGetters } from 'vuex'

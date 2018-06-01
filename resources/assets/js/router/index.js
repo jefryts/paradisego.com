@@ -24,59 +24,49 @@ import Layout from '../views/layout/Layout'
 export const constantRouterMap = [
 	{ path: '/login', component: require('../views/login/index'), hidden: true },
 	{ path: '/404', component: require('../views/404'), hidden: true },
+	// {
+	// 	path: '',
+	// 	component: Layout,
+	// 	children: [
+	// 		{
+	// 			path: '',
+	// 			component: require('../views/dashboard/index'),
+	// 			meta: { title: 'Inicio', icon: 'home'}
+	// 		}
+	// 	]
+	// },
 	{
-		path: '/',
+		path: '',
 		component: Layout,
-		redirect: '/dashboard',
-		name: 'Dashboard',
-		hidden: true,
-		children: [{
-			path: 'dashboard',
-			component: require('../views/dashboard/index')
-		}]
-	},
-	{
-		path: '/example',
-		component: Layout,
-		redirect: '/example/table',
-		name: 'Example',
-		meta: { title: 'Example', icon: 'example' },
 		children: [
 			{
-				path: 'table',
-				name: 'Table',
-				component: require('../views/table/index'),
-				meta: { title: 'Table', icon: 'table' }
-			},
-			{
-				path: 'tree',
-				name: 'Tree',
-				component: require('../views/tree/index'),
-				meta: { title: 'Tree', icon: 'tree' }
+				path: '',
+				component: require('../views/events/index'),
+				meta: { title: 'Inicio', icon: 'home'}
 			}
 		]
 	},
 	{
-		path: '/form',
-		component: Layout,
-		children: [
-			{
-				path: 'index',
-				name: 'Form',
-				component: require('../views/form/index'),
-				meta: { title: 'Form', icon: 'form' }
-			}
-		]
-	},
-	{
-		path: '/events',
+		path: '/eventos',
 		component: Layout,
 		children: [
 			{
 				path: '',
 				name: 'Events',
 				component: require('../views/events/index'),
-				meta: { title: 'Eventos', icon: 'form' }
+				meta: { title: 'Eventos', icon: 'calendar-alt' }
+			}
+		]
+	},
+	{
+		path: '/exitos',
+		component: Layout,
+		children: [
+			{
+				path: '',
+				name: 'Exits',
+				component: require('../views/events/index'),
+				meta: { title: 'Lista de Éxitos', icon: 'table' }
 			}
 		]
 	},
