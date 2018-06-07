@@ -1,6 +1,13 @@
 <template>
 	<div class="app-container">
-		<el-row :style="{ marginBottom: '20px' }">
+		<div class="block hidden-xs-only">
+			<el-carousel trigger="click" height="150px">
+				<el-carousel-item v-for="item in 4" :key="item">
+					<h3>{{ item }}</h3>
+				</el-carousel-item>
+			</el-carousel>
+		</div>
+		<el-row :style="{ margin: '20px 0px' }">
 			<el-col :span="24">
 				<!-- <el-card class="text-center" shadow="never"> -->
 					<div class="place-events text-center">
@@ -20,19 +27,14 @@
 			</el-col>
 		</el-row>
 		<el-row :gutter="20">
-			<el-col :span="8" v-for="item in model" :key="item.data" :style="{ marginBottom: '20px' }">
+			<el-col :xs="24" :sm="12" :md="8" v-for="item in model" :key="item.data" :style="{ marginBottom: '20px' }">
 				<el-card shadow="hover">
 					<img src="https://i.ytimg.com/vi/mQu_HQ_mkpc/maxresdefault.jpg" class="image">
 					<div style="padding: 12px;">
 						<div class="title-card">
 							<h3 style="margin: 0">{{ item.name }}</h3>
 						</div>
-						<div class="block text-right">
-							<el-rate
-								v-model="value2"
-								:colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-							</el-rate>
-						</div>
+						
 						<div class="date-info">
 							<div class="calendar">
 								<span class="month">{{ item.month }}</span>
@@ -49,14 +51,21 @@
 						</div> -->
 					</div>
 				</el-card>
+				<div class="block rate-container">
+					<span>Valoración: </span> 
+					<el-rate class="rate"
+						v-model="value2"
+						:colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+					</el-rate>
+				</div>
 			</el-col>
 		</el-row>
 	</div>
 </template>
 <style>
   .app-container {
-	padding-right: 10%;
-	padding-left: 10%;
+	padding-right: 50px;
+	padding-left: 50px;
   }
   .place-events {
 	font-size: 2em;
@@ -76,6 +85,12 @@
 	margin-bottom: 10px;
 	overflow: hidden;
 	height: 44px;
+  }
+  .rate-container{
+	margin: 5px;
+  }
+  .rate-container .rate{
+	float: right;
   }
   .time {
     font-size: 13px;
@@ -140,6 +155,40 @@
   
   .clearfix:after {
       clear: both
+  }
+  .el-carousel__item h3 {
+	text-align: center;
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+  @media only screen and (max-width: 600px) {
+    .app-container {
+	  padding-right: 10px;
+	  padding-left: 10px;
+	}
+  }
+  @media (min-width: 600px) and (max-width: 728px) {
+	.app-container {
+	  padding-right: 20px;
+	  padding-left: 20px;
+	}
+  }
+  @media (min-width: 728px) and (max-width: 992px) {
+	.app-container {
+	  padding-right: 35px;
+	  padding-left: 35px;
+	} 
   }
 </style>
 <script>

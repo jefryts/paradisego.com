@@ -2,19 +2,19 @@
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <h3 class="title">vue-element-admin</h3>
-      <el-form-item prop="username">
+      <el-form-item prop="email">
         <span class="svg-container svg-container_login">
-          <svg-icon icon-class="user" />
+		  <font-awesome-icon icon="user"/>
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="email" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password"></svg-icon>
+		  <font-awesome-icon icon="user"/>
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
           placeholder="password"></el-input>
-          <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
+          <span class="show-pwd" @click="showPwd"><font-awesome-icon icon="eye" /></span>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
@@ -22,7 +22,7 @@
         </el-button>
       </el-form-item>
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
+        <span style="margin-right:20px;">email: admin@admin.com</span>
         <span> password: admin</span>
       </div>
     </el-form>
@@ -30,39 +30,45 @@
 </template>
 
 <script>
-// import { isvalidUsername } from '@/utils/validate'
-
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 export default {
   name: 'login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-    //   if (!isvalidUsername(value)) {
-    //     callback(new Error('请输入正确的用户名'))
-    //   } else {
-    //     callback()
-    //   }
+    const validateEmail = (rule, value, callback) => {
+      if (!this.isvalidEmail(value)) {
+        callback(new Error('Por favor ingrese el nombre de usuario correcto'))
+      } else {
+        callback()
+      }
     }
     const validatePass = (rule, value, callback) => {
       if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+        callback(new Error('La contraseña no puede ser menor que 5'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
+        email: 'admin@admin.com',
         password: 'admin'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
       pwdType: 'password'
     }
   },
+  components: {
+	FontAwesomeIcon
+  },
   methods: {
+	isvalidEmail(str) {
+	  const valid_map = ['admin@admin.com', 'editor@editor.com']
+	  return valid_map.indexOf(str.trim()) >= 0
+	},
     showPwd() {
       if (this.pwdType === 'password') {
         this.pwdType = ''
@@ -74,7 +80,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          this.$store.dispatch('Login', this.loginForm)
+		  .then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
           }).catch(() => {
@@ -109,7 +116,7 @@ $light_gray:#eee;
       color: $light_gray;
       height: 47px;
       &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
+        box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: #fff !important;
       }
     }
@@ -158,7 +165,7 @@ $light_gray:#eee;
     width: 30px;
     display: inline-block;
     &_login {
-      font-size: 20px;
+    //   font-size: 20px;
     }
   }
   .title {

@@ -9,7 +9,7 @@ class UserInfo extends Model
 {
 	use SoftDeletes;
 
-	protected $fillable = ['first_name', 'last_name', 'dni', 'address', 'phone', 'cell_phone'];
+	protected $fillable = ['first_name', 'last_name', 'dni', 'address', 'phone', 'cell_phone', 'user_id'];
 
 	protected $appends = ['fullName'];
 

@@ -22,7 +22,8 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-	{ path: '/login', component: require('../views/login/index'), hidden: true },
+	{ path: '/login', component: require('../views/login/index'), hidden: true, meta: { requiresVisitor: true }, name: 'login'},
+	{ path: '/logout', component: require('../views/login/logout'), hidden: true, name: 'logout'},
 	{ path: '/404', component: require('../views/404'), hidden: true },
 	// {
 	// 	path: '',
@@ -42,19 +43,7 @@ export const constantRouterMap = [
 			{
 				path: '',
 				component: require('../views/events/index'),
-				meta: { title: 'Inicio', icon: 'home'}
-			}
-		]
-	},
-	{
-		path: '/eventos',
-		component: Layout,
-		children: [
-			{
-				path: '',
-				name: 'Events',
-				component: require('../views/events/index'),
-				meta: { title: 'Eventos', icon: 'calendar-alt' }
+				meta: { title: 'Inicio', icon: 'home' },
 			}
 		]
 	},

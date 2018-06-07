@@ -1,14 +1,15 @@
-import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { get, byMethod } from '../../lib/api';
+
+import axios from 'axios'
 
 const user = {
 	state: {
-		token: getToken(),
+		token: localStorage.getItem('access_token') || null,
 		name: '',
 		avatar: '',
-		roles: []
+		roles: [],
+		method: 'post'
 	},
-
 	mutations: {
 		SET_TOKEN: (state, token) => {
 			state.token = token
@@ -21,26 +22,24 @@ const user = {
 		},
 		SET_ROLES: (state, roles) => {
 			state.roles = roles
-		}
+		},
 	},
-
 	actions: {
-		// 登录
-		Login({ commit }, userInfo) {
-			const username = userInfo.username.trim()
+		Login({ commit, state }, credentials) {
 			return new Promise((resolve, reject) => {
-				login(username, userInfo.password).then(response => {
-					const data = response.data
-					setToken(data.token)
-					commit('SET_TOKEN', data.token)
-					resolve()
+				byMethod(state.method, '/api/login', credentials)
+				.then(response => {
+					const token = response.data.access_token
+
+					localStorage.setItem('access_token', token)
+					commit('SET_TOKEN', token)
+					
+					resolve(response)
 				}).catch(error => {
 					reject(error)
 				})
 			})
 		},
-
-		// 获取用户信息
 		GetInfo({ commit, state }) {
 			return new Promise((resolve, reject) => {
 				getInfo(state.token).then(response => {
@@ -58,25 +57,29 @@ const user = {
 				})
 			})
 		},
-
-		// 登出
-		LogOut({ commit, state }) {
-			return new Promise((resolve, reject) => {
-				logout(state.token).then(() => {
-					commit('SET_TOKEN', '')
-					commit('SET_ROLES', [])
-					removeToken()
-					resolve()
-				}).catch(error => {
-					reject(error)
+		LogOut({commit, state, getters}) {
+			axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token
+			if (getters.token) {
+				return new Promise((resolve, reject) => {
+					byMethod(state.method, '/api/logout')
+					.then(response => {
+						localStorage.removeItem('access_token')
+						commit('SET_TOKEN', null)
+						commit('SET_ROLES', [])
+						resolve(response)
+					})
+					.catch(error => {
+						localStorage.removeItem('access_token')
+						commit('SET_TOKEN', null)
+						reject(error)
+					})
 				})
-			})
-		},
 
-		// 前端 登出
-		FedLogOut({ commit }) {
+			}
+		},
+		FedLogOut(context) {
 			return new Promise(resolve => {
-				commit('SET_TOKEN', '')
+				context.commit('SET_TOKEN', '')
 				removeToken()
 				resolve()
 			})
